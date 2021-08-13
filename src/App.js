@@ -12,12 +12,10 @@ function App() {
     // Set default as Chicago
   const [error, setError] = useState(false);
   const apiKey = "bfc04fc93ef7abe8a19089cc9d683a3f";
-  const missing = document.querySelector(".missing")
+  const missing = document.querySelector(".missing");
 
   // Pulls Chicago info on launch, and updates whenever "latLon" has been changed
   useEffect(() => {
-
-    missing ? missing.classList.add("display") : null
 
     setError(false);
 
@@ -42,11 +40,11 @@ function App() {
   const getLatLon = (city, zip, country) => {
 
     if (city) {
-      const url = new URL("https://api.openweathermap.org/data/2.5/weather")
+      const url = new URL("https://api.openweathermap.org/data/2.5/weather");
       url.search = new URLSearchParams({
         q: city,
         appid: apiKey
-      })
+      });
   
       fetch(url).then(data => data.json())
         .then(jsonData => setCoords(jsonData));
@@ -57,11 +55,11 @@ function App() {
         zip = zip.slice(0, 3);
       }
 
-      const url = new URL("https://api.openweathermap.org/data/2.5/weather")
+      const url = new URL("https://api.openweathermap.org/data/2.5/weather");
       url.search = new URLSearchParams({
         zip: `${zip},${country}`,
         appid: apiKey
-      })
+      });
   
       fetch(url).then(data => data.json())
         .then(jsonData => setCoords(jsonData));
@@ -69,7 +67,7 @@ function App() {
 
     const setCoords = (data) => {
       try {
-        setLatLon([data.coord.lat, data.coord.lon])
+        setLatLon([data.coord.lat, data.coord.lon]);
       } catch {
         setError(true);
       }
@@ -85,7 +83,7 @@ function App() {
   const iconGenerate = (day) => {
     return (
       <img src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} alt={`Icon for ${day.weather[0].description} weather.`} />
-    )
+    );
   }
 
   const suffix = (date) => {
@@ -102,18 +100,19 @@ function App() {
 
   // One query determines whether a City or Zip/Country code was entered, and processes the information respectively. Additional error handling.
   const formQuery = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    missing.classList.add("display");
 
     if (e.target[0].value === "" && e.target[1].value === "") {
-      missing.classList.remove("display")
+      missing.classList.remove("display");
     } else if (e.target[1].value) {
       if (e.target[2].value === "") {
-        missing.classList.remove("display")
+        missing.classList.remove("display");
       } else {
-        getLatLon(null, e.target[1].value, e.target[2].value)
+        getLatLon(null, e.target[1].value, e.target[2].value);
       }
     } else {
-      getLatLon(e.target[0].value)
+      getLatLon(e.target[0].value);
     }
 
     e.target[0].value = ""
