@@ -82,7 +82,7 @@ function App() {
 
   const iconGenerate = (day) => {
     return (
-      <img src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} alt={`Icon for ${day.weather[0].description} weather.`} />
+      <img src={`https://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} alt={`Icon for ${day.weather[0].description} weather.`} />
     );
   }
 
